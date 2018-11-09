@@ -17,7 +17,6 @@ volumes:
 
 services:
   nginx:
-    container_name: nginx
     image: valian/docker-nginx-auto-ssl
     environment:
       ALLOWED_DOMAINS: netslum.it
@@ -33,7 +32,6 @@ services:
     restart: always
 
   db:
-    container_name: ghost-db
     image: mysql:5.7
     restart: always
     volumes:
@@ -45,7 +43,6 @@ services:
       MYSQL_ROOT_PASSWORD: password
 
   ghost:
-    container_name: ghost
     image: macchie/ghost-scs
     restart: always
     volumes:

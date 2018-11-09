@@ -9,7 +9,6 @@ volumes:
 
 services:
   db:
-    container_name: ghost-db
     image: mysql:5.7
     restart: always
     volumes:
@@ -20,7 +19,6 @@ services:
 
   ghost:
     build: .
-    container_name: ghost
     image: ghost-custom
     restart: always
     ports:
