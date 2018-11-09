@@ -19,7 +19,7 @@ services:
 
   ghost:
     build: .
-    image: ghost-custom
+    image: macchie/ghost-scs
     restart: always
     ports:
       - "2368:2368"
