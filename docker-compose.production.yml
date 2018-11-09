@@ -1,0 +1,82 @@
+version: '3.6'
+
+networks:
+  default:
+    driver: overlay
+    attachable: false
+    driver_opts:
+      encrypted: "false" # this is mandatory to avoid MySQL timeouts on idle
+
+volumes:
+  ssl-certs:
+  ghost-db:
+  ghost-content:
+    # driver: local-persist
+    # driver_opts:
+    #   mountpoint: ${PWD}/ghost
+
+services:
+  nginx:
+    container_name: nginx
+    image: valian/docker-nginx-auto-ssl
+    environment:
+      ALLOWED_DOMAINS: netslum.it
+      SITES: "yourdomain.com=ghost:2368"
+      FORCE_HTTPS: "true"
+    volumes:
+      - ssl-certs:/etc/resty-auto-ssl
+    networks:
+      - default
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+  db:
+    container_name: ghost-db
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ghost-db:/var/lib/mysql
+    networks:
+      - default
+    environment:
+      MYSQL_DATABASE: ghost
+      MYSQL_ROOT_PASSWORD: password
+
+  ghost:
+    container_name: ghost
+    image: macchie/ghost-scs
+    restart: always
+    volumes:
+      - ghost-content:/var/lib/ghost/content
+    networks:
+      - default
+    environment:
+      ENV: production
+      NODE_ENV: production
+      url: https://yourdomain.com
+      admin_url: https://yourdomain.com
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: username
+      database__connection__password: root
+      database__connection__database: ghost
+      storage__active: digitalocean # or 's3' for AWS storage
+      GHOST_DO_KEY: DO_KEY
+      GHOST_DO_SECRET: DO_SECRET
+      GHOST_DO_REGION: DO_REGION
+      GHOST_DO_BUCKET: DO_BUCKET
+      GHOST_DO_ENDPOINT: DO_ENDPOINT
+      GHOST_DO_SUBFOLDER: DO_SUBFOLDER
+      GHOST_DO_SPACE_URL: DO_SPACE_URL
+      # in case you want to use AWS S3 for storage customize these vars
+      # AWS_ACCESS_KEY_ID
+      # AWS_SECRET_ACCESS_KEY
+      # AWS_DEFAULT_REGION
+      # GHOST_STORAGE_ADAPTER_S3_PATH_BUCKET
+      # GHOST_STORAGE_ADAPTER_S3_ASSET_HOST  // optional
+      # GHOST_STORAGE_ADAPTER_S3_PATH_PREFIX // optional
+      # GHOST_STORAGE_ADAPTER_S3_ENDPOINT // optional
+      # GHOST_STORAGE_ADAPTER_S3_SSE // optional
+      # GHOST_STORAGE_ADAPTER_S3_FORCE_PATH_STYLE // optional

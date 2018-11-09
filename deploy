@@ -1,0 +1,14 @@
+#!/bin/bash
+
+STACKNAME=$1
+
+if [ -z "$STACKNAME" ]; then
+  echo "[WARNING] No Stack Name specified! Using default 'ghost_website'."
+  STACKNAME=ghost_website
+fi
+
+if [ "$ENV" = "production" ]; then
+  docker stack deploy -c docker-compose.production.yml $STACKNAME
+else
+  docker-compose up --build
+fi
