@@ -19,7 +19,7 @@ services:
   nginx:
     image: valian/docker-nginx-auto-ssl
     environment:
-      ALLOWED_DOMAINS: netslum.it
+      ALLOWED_DOMAINS: yourdomain.com
       SITES: "yourdomain.com=ghost:2368"
       FORCE_HTTPS: "true"
     volumes:
