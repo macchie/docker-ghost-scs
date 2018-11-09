@@ -16,5 +16,5 @@ RUN npm install ghost-digitalocean && \
 # install ghost-storage-adapter-s3 npm package
 # https://github.com/colinmeinke/ghost-storage-adapter-s3
 RUN npm install ghost-s3-storage-adapter && \
-    cp -r ./node_modules/ghost-storage-adapter-s3 \
+    cp -r ./node_modules/ghost-s3-storage-adapter \
     ./content.orig/adapters/storage/s3
