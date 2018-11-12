@@ -1,5 +1,10 @@
 # Ghost Platform with Docker, SSL and Cloud Storage
 
+![Docker Automated build](https://img.shields.io/docker/automated/macchie/ghost-scs.svg)
+![Docker Build Status](https://img.shields.io/docker/build/macchie/ghost-scs.svg)
+![Docker Stars](https://img.shields.io/docker/stars/macchie/ghost-scs.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/macchie/ghost-scs.svg)
+
 The goal was to set up Ghost on a Docker host machine with a Cloud asset storage (AWS or DigitalOcean) and enable HTTPS using Let’s Encrypt for certificate generation and auto-renewal.
 
 This recipe can either be used via docker-compose or docker stack deploy (on Swarm enabled Docker hosts), i created a GitHub Repository with docker-compose files and some useful scripts.
